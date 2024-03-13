@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "id": "8d4537aa-d1f1-7d88-9ce6-f7b791c1b57d",
+  "detail-type": "AGGR_UBEREATS_STORE_STATUS_CHANGED",
+  "source": "custom.com.tillster.tce",
+  "account": "659084848622",
+  "time": "2020-05-28T21:13:08Z",
+  "region": "us-east-1",
+  "resources": [],
+  "detail": {
+    "context": {
+      "eventType": "AGGR_UBEREATS_STORE_STATUS_CHANGED",
+      "aggregatorStoreId": "e067e0a2-aca3-4f3b-9786-bb55c61a0971",
+      "correlationContext": {
+        "correlationId": "00000000-0000-0000-0000-000000000001",
+        "tenantId": "c16f33a6-1f32-438e-b69f-0cfc12c3bc88",
+        "aggregator": "UBEREATS",
+        "platform": "TCE",
+        "initiator": null,
+        "correlationMetaData": {
+          "platformStoreId": "PCSV-01"
+        },
+        "initiationTime": "2021-07-10T12:16:00Z"
+      },
+      "contextMetaData": {}
+    },
+    "payload": {
+      "status": "ONLINE"
+    }
+  }
+}

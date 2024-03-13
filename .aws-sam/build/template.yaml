@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  MyLambdaHandlerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest
+      Runtime: java11
+      CodeUri: ../../target/function.zip
+      MemorySize: 1024
+      Policies: AWSLambdaBasicExecutionRole
+      Timeout: 1500
+      Environment:
+        Variables:
+          QUARKUS_LAMBDA_HANDLER: StoreLambdaHandler
+          MY_SECRET_ID:
+            Ref: MySecret
+  EventRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: EventRule
+      EventPattern:
+        source:
+        - com.nagarro
+      Targets:
+      - Arn:
+          Fn::GetAtt:
+          - MyLambdaHandlerFunction
+          - Arn
+        Id: MyLambdaHandlerFunction
+  MySecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Name: tillster-aws-secret
+      Description: Secret for adaptor service
+      GenerateSecretString:
+        SecretStringTemplate: '{"username": "admin"}'
+        GenerateStringKey: password
+        PasswordLength: 16
+      Tags:
+      - Key: Environment
+        Value: Development
+  MySecretAttachment:
+    Type: AWS::SecretsManager::SecretTargetAttachment
+    Properties:
+      SecretId:
+        Ref: MySecret
+      TargetType: AWS::Lambda::Function
+      TargetId:
+        Ref: MyLambdaHandlerFunction
